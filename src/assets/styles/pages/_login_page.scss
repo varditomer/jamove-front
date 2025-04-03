@@ -1,14 +1,15 @@
 .login-page {
     display: flex;
     justify-content: space-between;
-    // height: 99vh;
-    overflow: hidden;
+    height: 100vh; // Set explicit height to viewport height
+    overflow: hidden; // Keep this to prevent scrolling
 
     > * {
         // Targets direct children (both sections)
         flex: 1; // Each takes half of the width
         height: 100%;
     }
+
     .login-form-section {
         display: flex;
         flex-direction: column;
@@ -21,6 +22,7 @@
             font-size: 24px;
             line-height: 34px;
         }
+
         .page-identify-title {
             font-family: exo;
             color: #937100;
@@ -72,6 +74,7 @@
                 border-radius: 12px;
                 padding-block: 13px;
                 padding-inline: 197px;
+                width: 451px;
                 background-color: #ffcd29;
                 border: none;
                 color: #050400;
@@ -100,20 +103,27 @@
 
     .cover-section {
         position: relative;
+        height: 100%; // Ensure it takes full height
+        overflow: hidden; // Hide overflow
         display: flex;
         align-items: center;
         gap: 10px;
 
         .welcome-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             border-top-left-radius: 12px;
             border-bottom-left-radius: 12px;
         }
 
         .title {
             position: absolute;
-            bottom: 0;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            bottom: 28px;
             right: 28px;
-            z-index: 2;
 
             .text {
                 font-family: bebas-neue;
