@@ -1,6 +1,7 @@
 import React from "react";
 import LoginImgURL from "../assets/images/login_img.png";
 import HeadphonesURL from "../assets/images/headphones.png";
+import { Link } from "react-router-dom";
 
 export const LoginPage = () => {
   return (
@@ -21,9 +22,9 @@ export const LoginPage = () => {
                 <input type="checkbox" />
                 <span className="text">Remember me</span>
               </div>
-              <a href="/" className="forgot-password-link">
+              <Link href="/" className="forgot-password-link">
                 Forgot Password ?
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -31,9 +32,9 @@ export const LoginPage = () => {
 
           <div className="register-link-wrapper">
             <span>Don’t have an account?</span>
-            <a href="/" className="register-link">
+            <Link to="/register" className="register-link">
               Register
-            </a>
+            </Link>
           </div>
         </form>
       </section>

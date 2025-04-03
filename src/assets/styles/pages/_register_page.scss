@@ -1,0 +1,126 @@
+.register-page {
+    display: flex;
+    justify-content: space-between;
+    // height: 99vh;
+    overflow: hidden;
+
+    > * {
+        // Targets direct children (both sections)
+        flex: 1; // Each takes half of the width
+        height: 100%;
+    }
+    .register-form-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 90px;
+
+        .welcome-heading {
+            font-family: exo;
+            color: #6e6d6d;
+            font-size: 24px;
+            line-height: 34px;
+        }
+        .page-identify-title {
+            font-family: exo;
+            color: #937100;
+            font-size: 56px;
+            line-height: 66px;
+        }
+
+        .register-form {
+            margin-block-start: 32px;
+            .form-control {
+                margin-block-end: 36px;
+                .label {
+                    font-family: exo;
+                    font-size: 18px;
+                    line-height: 28px;
+                    margin-block-end: 8px;
+                }
+
+                input,
+                select {
+                    width: 100%;
+                    border: 1px solid rgba(189, 189, 189, 1);
+                    border-radius: 12px;
+                    background-color: rgba(126, 106, 37, 0.08);
+                    padding-block: 17px;
+                    padding-inline: 24px;
+                }
+
+                .password-actions {
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-block-start: 12px;
+
+                    .remember-me {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        gap: 8px;
+                        .text {
+                            font-weight: 300;
+                            white-space: nowrap;
+                        }
+                    }
+                }
+            }
+
+            .btn-submit {
+                border-radius: 12px;
+                padding-block: 13px;
+                padding-inline: 197px;
+                background-color: #ffcd29;
+                border: none;
+                color: #050400;
+                font-family: exo;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 24px;
+                white-space: nowrap;
+                cursor: pointer;
+                margin-block-end: 24px;
+            }
+
+            .register-link-wrapper {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+
+                .register-link {
+                    color: #937100;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+
+    .cover-section {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .welcome-img {
+            border-top-left-radius: 12px;
+            border-bottom-left-radius: 12px;
+        }
+
+        .title {
+            position: absolute;
+            bottom: 0;
+            right: 28px;
+            z-index: 2;
+
+            .text {
+                font-family: bebas-neue;
+                font-size: 47.25px;
+                color: #fff;
+            }
+        }
+    }
+}
