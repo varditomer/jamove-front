@@ -10,7 +10,7 @@ import RegisterImgURL from "../assets/images/register_img.png";
 
 export const RegisterPage = ({ isAdmin = false }) => {
   const navigate = useNavigate();
-  const { register } = useAuth();
+  const { register, registerAdmin } = useAuth();
 
   // Form data state
   const [formData, setFormData] = useState({
@@ -73,15 +73,16 @@ export const RegisterPage = ({ isAdmin = false }) => {
       const userToRegister = {
         username: formData.username,
         password: formData.password,
-        instrument: formData.instrument,
       };
 
-      await register(userToRegister);
+      if (!isAdmin) {
+        userToRegister.instrument = formData.instrument;
+        await register(userToRegister);
+      } else {
+        await registerAdmin(userToRegister);
+      }
 
-      // Show success message
       toast.success("Registration successful! Please log in.");
-
-      // Navigate to login
       navigate("/login");
     } catch (err) {
       const errorMessage = err.message || "Registration failed";

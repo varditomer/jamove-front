@@ -6,14 +6,6 @@ import { localStorageService, sessionStorageService } from './storage.service';
 const STORAGE_KEY_LOGGEDIN_USER = 'loggedinUser';
 const TOKEN_KEY = 'token';
 
-export const userService = {
-    login,
-    register,
-    logout,
-    getLoggedInUser,
-    isAdmin
-};
-
 async function login(credentials) {
     try {
         const res = await httpService.post('auth/login', credentials);
@@ -47,6 +39,17 @@ async function register(userInfo) {
     }
 }
 
+const registerAdmin = async (userInfo) => {
+    try {
+        const res = await httpService.post('auth/register-admin', userInfo);
+        return res;
+    } catch (error) {
+        console.error('Admin registration failed:', error);
+        throw error;
+    }
+}
+
+
 async function logout() {
     try {
         // Optionally call the server to invalidate the token
@@ -69,3 +72,12 @@ function isAdmin() {
     const user = getLoggedInUser();
     return user?.role === 'admin';
 }
+
+export const userService = {
+    login,
+    register,
+    registerAdmin,
+    logout,
+    getLoggedInUser,
+    isAdmin
+};

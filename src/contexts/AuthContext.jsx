@@ -32,6 +32,11 @@ export const AuthProvider = ({ children }) => {
   const register = async (userInfo) => {
     return await userService.register(userInfo);
   };
+  
+  // Register Adming function
+  const registerAdmin = async (userInfo) => {
+    return await userService.registerAdmin(userInfo);
+  };
 
   // Logout function
   const logout = async () => {
@@ -54,6 +59,7 @@ export const AuthProvider = ({ children }) => {
     currentUser,
     login,
     register,
+    registerAdmin,
     logout,
     isAdmin,
     playsInstrument,
