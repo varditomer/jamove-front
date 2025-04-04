@@ -1,4 +1,6 @@
-/* base.scss */
+// src/assets/styles/basics/_base.scss
+@use '../setup' as *;
+
 * {
     margin: 0;
     padding: 0;
@@ -10,25 +12,33 @@ html {
 }
 
 body {
-    font-family: exo;
-    // font-family:
-    //     "Inter",
-    //     -apple-system,
-    //     BlinkMacSystemFont,
-    //     "Segoe UI",
-    //     Roboto,
-    //     Oxygen,
-    //     Ubuntu,
-    //     Cantarell,
-    //     "Open Sans",
-    //     "Helvetica Neue",
-    //     sans-serif;
-    // background-color: #f7fafc;
-    // color: #2d3748;
-    // line-height: 1.5;
+    color: $primary-text;
 }
 
-a, a:hover, a:focus, a:active {
+a,
+a:hover,
+a:focus,
+a:active {
     text-decoration: none;
     color: inherit;
+}
+
+// Error styling
+.error {
+    color: $error-color;
+    font-size: 14px;
+}
+
+// Toast notifications custom styling
+.Toastify__toast {
+    border-radius: $border-radius;
+    font-family: exo;
+}
+
+.Toastify__toast--success {
+    background-color: #4caf50;
+}
+
+.Toastify__toast--error {
+    background-color: $error-color;
 }

@@ -1,0 +1,36 @@
+// src/assets/styles/setup/_variables.scss
+
+// Colors
+$primary-color: #ffcd29;
+$primary-text: #050400;
+$primary-dark: #937100;
+$secondary-color: rgba(126, 106, 37, 0.08);
+$text-light: #6e6d6d;
+$border-color: rgba(189, 189, 189, 1);
+$white: #fff;
+$error-color: #d32f2f;
+$placeholder-color: #757575;
+
+// Typography
+$font-size-small: 16px;
+$font-size-medium: 18px;
+$font-size-large: 24px;
+$font-size-xlarge: 56px;
+$font-size-logo: 47.25px;
+
+// Spacing
+$spacing-xs: 8px;
+$spacing-sm: 12px;
+$spacing-md: 24px;
+$spacing-lg: 28px;
+$spacing-xl: 36px;
+$spacing-xxl: 90px;
+
+// Borders
+$border-radius: 12px;
+
+// Breakpoints
+$mobile-breakpoint: 480px;
+$narrow-breakpoint: 720px;
+$normal-breakpoint: 960px;
+$wide-breakpoint: 1200px;

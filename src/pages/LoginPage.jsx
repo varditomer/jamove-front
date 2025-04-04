@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
 import { toast } from "react-toastify";
+import { useAuth } from "../contexts/AuthContext";
 
-import LoginImgURL from "../assets/images/login_img.png";
-import HeadphonesURL from "../assets/images/headphones.png";
 import EyeClosedIcon from "../assets/images/eye_closed_icon.png";
 import EyeOpenIcon from "../assets/images/eye_open_icon.png";
+import HeadphonesURL from "../assets/images/headphones.png";
+import LoginImgURL from "../assets/images/login_img.png";
 
 export const LoginPage = () => {
   const navigate = useNavigate();
@@ -19,11 +19,9 @@ export const LoginPage = () => {
     rememberMe: false,
   });
 
-  // Error and loading states
-  const [error, setError] = useState("");
+  // Form validation errors
+  const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-
-  // Show password state
   const [showPassword, setShowPassword] = useState(false);
 
   // Handle form input change
@@ -33,16 +31,28 @@ export const LoginPage = () => {
       ...formData,
       [name]: type === "checkbox" ? checked : value,
     });
+
+    // Clear error for this field when user starts typing
+    if (errors[name]) {
+      setErrors({ ...errors, [name]: null });
+    }
+  };
+
+  // Form validation
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.username) newErrors.username = "Username is required";
+    if (!formData.password) newErrors.password = "Password is required";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   // Form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
 
-    // Basic validation
-    if (!formData.username || !formData.password) {
-      setError("Username and password are required");
+    if (!validateForm()) {
       return;
     }
 
@@ -69,7 +79,6 @@ export const LoginPage = () => {
     } catch (err) {
       const errorMessage =
         err.message || "Login failed. Please check your credentials.";
-      setError(errorMessage);
       toast.error(errorMessage);
     } finally {
       setIsLoading(false);
@@ -82,9 +91,7 @@ export const LoginPage = () => {
         <h2 className="welcome-heading">Welcome to JaMoveo</h2>
         <h1 className="page-identify-title">Log in</h1>
 
-        {error && <div className="error-message">{error}</div>}
-
-        <form onSubmit={handleSubmit} className="login-form">
+        <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-control">
             <div className="label">Enter your Username*</div>
             <input
@@ -95,6 +102,7 @@ export const LoginPage = () => {
               placeholder="Username"
               disabled={isLoading}
             />
+            {errors.username && <div className="error">{errors.username}</div>}
           </div>
 
           <div className="form-control">
@@ -120,6 +128,7 @@ export const LoginPage = () => {
                 />
               </button>
             </div>
+            {errors.password && <div className="error">{errors.password}</div>}
 
             <div className="password-actions">
               <div className="remember-me">
@@ -142,9 +151,9 @@ export const LoginPage = () => {
             {isLoading ? "Logging in..." : "Log in"}
           </button>
 
-          <div className="register-link-wrapper">
+          <div className="auth-link-wrapper">
             <span>Don't have an account?</span>
-            <Link to="/register" className="register-link">
+            <Link to="/register" className="auth-link">
               Register
             </Link>
           </div>

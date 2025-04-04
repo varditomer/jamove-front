@@ -1,9 +1,11 @@
-// Basics
-@use "basics/base";
-
 // Setup
-@use "setup/typography";
+@use "setup/variables" as *;
+@use "setup/typography" as *;
+
+// Basics
+@use "basics/base" as *;
+@use "basics/forms" as *;
 
 // Pages
-@use "pages/login_page";
-@use "pages/register_page";
+@use "pages/login_page" as *;
+@use "pages/register_page" as *;

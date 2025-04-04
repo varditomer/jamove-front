@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
 import { toast } from "react-toastify";
+import { useAuth } from "../contexts/AuthContext";
 
-import Headphones from "../assets/images/headphones.png";
-import RegisterImg from "../assets/images/register_img.png";
 import EyeClosedIcon from "../assets/images/eye_closed_icon.png";
 import EyeOpenIcon from "../assets/images/eye_open_icon.png";
+import HeadphonesURL from "../assets/images/headphones.png";
+import RegisterImgURL from "../assets/images/register_img.png";
 
 export const RegisterPage = ({ isAdmin = false }) => {
   const navigate = useNavigate();
@@ -19,11 +19,9 @@ export const RegisterPage = ({ isAdmin = false }) => {
     instrument: "",
   });
 
-  // Error and loading states
+  // Form validation errors
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-
-  // Show password state
   const [showPassword, setShowPassword] = useState(false);
 
   // Instruments options array for select
@@ -65,30 +63,31 @@ export const RegisterPage = ({ isAdmin = false }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (validateForm()) {
-      try {
-        setIsLoading(true);
+    if (!validateForm()) {
+      return;
+    }
 
-        const userToRegister = {
-          username: formData.username,
-          password: formData.password,
-          instrument: formData.instrument,
-        };
+    try {
+      setIsLoading(true);
 
-        await register(userToRegister);
+      const userToRegister = {
+        username: formData.username,
+        password: formData.password,
+        instrument: formData.instrument,
+      };
 
-        // Show success message
-        toast.success("Registration successful! Please log in.");
+      await register(userToRegister);
 
-        // Navigate to login
-        navigate("/login");
-      } catch (err) {
-        const errorMessage = err.message || "Registration failed";
-        setErrors({ ...errors, general: errorMessage });
-        toast.error(errorMessage);
-      } finally {
-        setIsLoading(false);
-      }
+      // Show success message
+      toast.success("Registration successful! Please log in.");
+
+      // Navigate to login
+      navigate("/login");
+    } catch (err) {
+      const errorMessage = err.message || "Registration failed";
+      toast.error(errorMessage);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -100,11 +99,7 @@ export const RegisterPage = ({ isAdmin = false }) => {
           {isAdmin ? "Admin Registration" : "Register"}
         </h1>
 
-        {errors.general && (
-          <div className="error-message">{errors.general}</div>
-        )}
-
-        <form onSubmit={handleSubmit} className="register-form">
+        <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-control">
             <div className="label">Username*</div>
             <input
@@ -174,9 +169,9 @@ export const RegisterPage = ({ isAdmin = false }) => {
             {isLoading ? "Registering..." : "Register"}
           </button>
 
-          <div className="register-link-wrapper">
+          <div className="auth-link-wrapper">
             <span>Already have an account?</span>
-            <Link to="/login" className="register-link">
+            <Link to="/login" className="auth-link">
               Log in
             </Link>
           </div>
@@ -184,9 +179,9 @@ export const RegisterPage = ({ isAdmin = false }) => {
       </section>
 
       <section className="cover-section">
-        <img src={RegisterImg} alt="welcome_img" className="welcome-img" />
+        <img src={RegisterImgURL} alt="welcome_img" className="welcome-img" />
         <div className="title">
-          <img src={Headphones} alt="headphones_logo" className="logo" />
+          <img src={HeadphonesURL} alt="headphones_logo" className="logo" />
           <span className="text">JAMOVEO</span>
         </div>
       </section>

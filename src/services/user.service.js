@@ -1,5 +1,5 @@
 // src/services/userService.js
-import { httpService } from './httpService';
+import { httpService } from './http.service';
 import { localStorageService, sessionStorageService } from './storage.service';
 
 // Constants
