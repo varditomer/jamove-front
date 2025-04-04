@@ -1,24 +1,23 @@
+// src/App.jsx
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { AuthProvider } from "./contexts/AuthContext";
-import { LoginPage } from "./pages/LoginPage";
-import { RegisterPage } from "./pages/RegisterPage";
-import { PlayerPage } from "./pages/PlayerPage";
-import { AdminPage } from "./pages/AdminPage";
 import { ProtectedRoute } from "./components/ProtectedRoute";
+import { AuthProvider } from "./contexts/AuthContext";
+import { RehearsalProvider } from "./contexts/RehearsalContext";
+import { AdminPage } from "./pages/AdminPage";
+import { LivePage } from "./pages/LivePage";
+import { LoginPage } from "./pages/LoginPage";
+import { PlayerPage } from "./pages/PlayerPage";
+import { RegisterPage } from "./pages/RegisterPage";
+import { ResultsPage } from "./pages/ResultsPage";
 
 function App() {
   return (
     <AuthProvider>
-      <Router>
+      <RehearsalProvider>
         <ToastContainer position="top-right" autoClose={3000} />
         <Routes>
           <Route path="/login" element={<LoginPage />} />
@@ -47,10 +46,28 @@ function App() {
             }
           />
 
+          <Route
+            path="/results"
+            element={
+              <ProtectedRoute adminOnly={true}>
+                <ResultsPage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/live"
+            element={
+              <ProtectedRoute>
+                <LivePage />
+              </ProtectedRoute>
+            }
+          />
+
           {/* Redirect to login if no path matches */}
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
-      </Router>
+      </RehearsalProvider>
     </AuthProvider>
   );
 }
