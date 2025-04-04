@@ -1,6 +1,4 @@
-import React from "react";
 import MusicNote from "../assets/images/music_note.png";
-
 
 export const PlayerPage = () => {
   return (
