@@ -1,25 +1,29 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { toast } from "react-toastify";
 
 import Headphones from "../assets/images/headphones.png";
 import RegisterImg from "../assets/images/register_img.png";
 import EyeClosedIcon from "../assets/images/eye_closed_icon.png";
-import EyeOpenIcon from "../assets/images/eye_closed_icon.png";
+import EyeOpenIcon from "../assets/images/eye_open_icon.png";
 
 export const RegisterPage = ({ isAdmin = false }) => {
   const navigate = useNavigate();
+  const { register } = useAuth();
 
-  // form data state
+  // Form data state
   const [formData, setFormData] = useState({
     username: "",
     password: "",
     instrument: "",
   });
 
-  // form errors state
+  // Error and loading states
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
-  // show password state
+  // Show password state
   const [showPassword, setShowPassword] = useState(false);
 
   // Instruments options array for select
@@ -38,6 +42,11 @@ export const RegisterPage = ({ isAdmin = false }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+
+    // Clear error for this field when user starts typing
+    if (errors[name]) {
+      setErrors({ ...errors, [name]: null });
+    }
   };
 
   // Form validation method
@@ -57,9 +66,29 @@ export const RegisterPage = ({ isAdmin = false }) => {
     e.preventDefault();
 
     if (validateForm()) {
-      // TODO: Registration API call here
-      console.log("Form submitted:", formData);
-      navigate("/login");
+      try {
+        setIsLoading(true);
+
+        const userToRegister = {
+          username: formData.username,
+          password: formData.password,
+          instrument: formData.instrument,
+        };
+
+        await register(userToRegister);
+
+        // Show success message
+        toast.success("Registration successful! Please log in.");
+
+        // Navigate to login
+        navigate("/login");
+      } catch (err) {
+        const errorMessage = err.message || "Registration failed";
+        setErrors({ ...errors, general: errorMessage });
+        toast.error(errorMessage);
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -70,6 +99,11 @@ export const RegisterPage = ({ isAdmin = false }) => {
         <h1 className="page-identify-title">
           {isAdmin ? "Admin Registration" : "Register"}
         </h1>
+
+        {errors.general && (
+          <div className="error-message">{errors.general}</div>
+        )}
+
         <form onSubmit={handleSubmit} className="register-form">
           <div className="form-control">
             <div className="label">Username*</div>
@@ -79,6 +113,7 @@ export const RegisterPage = ({ isAdmin = false }) => {
               value={formData.username}
               onChange={handleChange}
               placeholder="Select your username"
+              disabled={isLoading}
             />
             {errors.username && <div className="error">{errors.username}</div>}
           </div>
@@ -91,6 +126,7 @@ export const RegisterPage = ({ isAdmin = false }) => {
                   name="instrument"
                   value={formData.instrument}
                   onChange={handleChange}
+                  disabled={isLoading}
                 >
                   <option value="" className="placeholder-option">
                     Select your instrument
@@ -117,13 +153,13 @@ export const RegisterPage = ({ isAdmin = false }) => {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Password"
+                disabled={isLoading}
               />
               <button
                 type="button"
                 className="toggle-password-visibility"
                 onClick={() => setShowPassword(!showPassword)}
                 aria-label={showPassword ? "Hide password" : "Show password"}
-                style={{ position: "absolute", right: "15px" }}
               >
                 <img
                   src={showPassword ? EyeOpenIcon : EyeClosedIcon}
@@ -134,8 +170,8 @@ export const RegisterPage = ({ isAdmin = false }) => {
             {errors.password && <div className="error">{errors.password}</div>}
           </div>
 
-          <button className="btn-submit" type="submit">
-            Register
+          <button className="btn-submit" type="submit" disabled={isLoading}>
+            {isLoading ? "Registering..." : "Register"}
           </button>
 
           <div className="register-link-wrapper">
