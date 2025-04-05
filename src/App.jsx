@@ -1,10 +1,10 @@
-// src/App.jsx
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { ProtectedRoute } from "./components/ProtectedRoute";
+import { PageLayout } from "./components/layout/PageLayout";
 import { AuthProvider } from "./contexts/AuthContext";
 import { RehearsalProvider } from "./contexts/RehearsalContext";
 import { AdminPage } from "./pages/AdminPage";
@@ -32,7 +32,9 @@ function App() {
             path="/player"
             element={
               <ProtectedRoute>
-                <PlayerPage />
+                <PageLayout borderStyle="dashed" className="player-page">
+                  <PlayerPage />
+                </PageLayout>
               </ProtectedRoute>
             }
           />
@@ -41,7 +43,9 @@ function App() {
             path="/admin"
             element={
               <ProtectedRoute adminOnly={true}>
-                <AdminPage />
+                <PageLayout>
+                  <AdminPage />
+                </PageLayout>
               </ProtectedRoute>
             }
           />
@@ -50,7 +54,9 @@ function App() {
             path="/results"
             element={
               <ProtectedRoute adminOnly={true}>
-                <ResultsPage />
+                <PageLayout>
+                  <ResultsPage />
+                </PageLayout>
               </ProtectedRoute>
             }
           />
@@ -59,7 +65,9 @@ function App() {
             path="/live"
             element={
               <ProtectedRoute>
-                <LivePage />
+                <PageLayout borderStyle="solid" className="live-page">
+                  <LivePage />
+                </PageLayout>
               </ProtectedRoute>
             }
           />
