@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { useRehearsal } from "../../contexts/RehearsalContext";
 import HeadphonesURL from "../../assets/images/headphones_yellow.png";
+import AvatarURL from "../../assets/images/avatar.svg";
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -26,12 +27,9 @@ export const Header = () => {
         </div>
         {currentUser && (
           <div className="header-actions">
-            {/* <span className="user-name">
-              {currentUser.name || currentUser.email}
-            </span> */}
-            <button onClick={handleLogout} className="logout-btn">
-              Logout
-            </button>
+            {/* <button onClick={handleLogout} className="logout-btn"> */}
+              <img src={AvatarURL} alt="avatar" onClick={handleLogout} />
+            {/* </button> */}
           </div>
         )}
       </div>
